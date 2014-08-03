@@ -43,7 +43,26 @@ static PyMethodDef module_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
-PyMODINIT_FUNC initBeaglebone_Black_Driver(void)
-{
-    Py_InitModule("Beaglebone_Black_Driver", module_methods);
-}
+#if PY_MAJOR_VERSION >= 3
+    static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "Beaglebone_Black_Driver", /* m_name */
+        NULL,                  /* m_doc */
+        -1,                    /* m_size */
+        module_methods,        /* m_methods */
+        NULL,                  /* m_reload */
+        NULL,                  /* m_traverse */
+        NULL,                  /* m_clear */
+        NULL,                  /* m_free */
+    };
+
+    PyMODINIT_FUNC PyInit_Beaglebone_Black_Driver(void)
+    {
+        return PyModule_Create(&moduledef);
+    }
+#else
+    PyMODINIT_FUNC initBeaglebone_Black_Driver(void)
+    {
+        Py_InitModule("Beaglebone_Black_Driver", module_methods);
+    }
+#endif

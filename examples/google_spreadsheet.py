@@ -57,12 +57,12 @@ def login_open_sheet(email, password, spreadsheet):
 		worksheet = gc.open(spreadsheet).sheet1
 		return worksheet
 	except:
-		print 'Unable to login and get spreadsheet.  Check email, password, spreadsheet name.'
+		print('Unable to login and get spreadsheet.  Check email, password, spreadsheet name.')
 		sys.exit(1)
 
 
-print 'Logging sensor measurements to {0} every {1} seconds.'.format(GDOCS_SPREADSHEET_NAME, FREQUENCY_SECONDS)
-print 'Press Ctrl-C to quit.'
+print('Logging sensor measurements to {0} every {1} seconds.'.format(GDOCS_SPREADSHEET_NAME, FREQUENCY_SECONDS))
+print('Press Ctrl-C to quit.')
 worksheet = None
 while True:
 	# Login if necessary.
@@ -79,8 +79,8 @@ while True:
 		time.sleep(2)
 		continue
 
-	print 'Temperature: {0:0.1f} C'.format(temp)
-	print 'Humidity:    {0:0.1f} %'.format(humidity)
+	print('Temperature: {0:0.1f} C'.format(temp))
+	print('Humidity:    {0:0.1f} %'.format(humidity))
  
 	# Append the data in the spreadsheet, including a timestamp
 	try:
@@ -88,11 +88,11 @@ while True:
 	except:
 		# Error appending data, most likely because credentials are stale.
 		# Null out the worksheet so a login is performed at the top of the loop.
-		print 'Append error, logging in again'
+		print('Append error, logging in again')
 		worksheet = None
 		time.sleep(FREQUENCY_SECONDS)
 		continue
 
 	# Wait 30 seconds before continuing
-	print 'Wrote a row to {0}'.format(GDOCS_SPREADSHEET_NAME)
+	print('Wrote a row to {0}'.format(GDOCS_SPREADSHEET_NAME))
 	time.sleep(FREQUENCY_SECONDS)
